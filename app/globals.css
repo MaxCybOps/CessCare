@@ -109,7 +109,9 @@
   /* Eyebrow labels are JetBrains Mono, uppercase, 1.6px tracking. */
   .text-eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    /* 16px in the design; steps down slightly on small screens so the long
+       social-proof label doesn't wrap awkwardly at 390px. */
+    font-size: clamp(0.8125rem, 0.72rem + 0.4vw, 1rem);
     line-height: 1.5rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;

@@ -12,7 +12,7 @@ export function AiCoach() {
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="flex flex-col gap-6">
-            <h2 className="text-h2 !text-white">{aiCoach.heading}</h2>
+            <h2 className="text-h2 text-white">{aiCoach.heading}</h2>
             <p className="max-w-[37rem] text-base leading-relaxed text-surface-mint">
               {aiCoach.subheading}
             </p>
