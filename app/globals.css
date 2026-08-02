@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/*
+  CessCare design tokens — extracted from the Figma file (node 27:1069).
+  Colour names map to how the design actually uses them, not to raw hues.
+*/
+@theme {
+  /* Brand + text */
+  --color-ink: #131b2e;
+  --color-body: #3e4a3d;
+  --color-brand: #006b2c;
+  --color-brand-bright: #00873a;
+  --color-brand-deep: #002109;
+  --color-mint: #7ffc97;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-lav: #f2f3ff;
+  --color-surface-off: #faf8ff;
+  --color-surface-mint: #f7fff2;
+  --color-line: #bdcaba;
+
+  /* Accent tints used by the Problem cards */
+  --color-tint-rose: #ffdad6;
+  --color-tint-lav: #eaedff;
+  --color-tint-amber: #ffddb8;
+  --color-icon-rose: #ba1a1a;
+  --color-icon-amber: #825100;
+
+  /* Type families — wired to next/font in layout.tsx */
+  --font-display: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Radii from the design: 16 / 32 / 48 / pill */
+  --radius-sm2: 16px;
+  --radius-card: 32px;
+  --radius-panel: 48px;
+}
+
+/*
+  The Figma frame is a single 1280px desktop artboard, so the type scale below
+  defines the desktop target and steps down at narrower widths. Values are the
+  design's exact size/line-height/letter-spacing.
+*/
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor jumps so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible focus for keyboard users — the design specifies no focus state. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* 1280 artboard = 1232 content + 24px gutters. */
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Display: 64/72 w700 ls-1.28 on desktop. */
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4rem);
+    line-height: 1.125;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section heading: 40/48 w600 ls-0.40 on desktop. */
+  .text-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Eyebrow labels are JetBrains Mono, uppercase, 1.6px tracking. */
+  .text-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-y {
+    padding-block: clamp(3.5rem, 2rem + 6vw, 5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
