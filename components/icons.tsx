@@ -63,15 +63,3 @@ export function Icon({
   if (!Cmp) return null;
   return <Cmp className={className} strokeWidth={1.75} aria-hidden="true" />;
 }
-
-/* Filled star for testimonial ratings — Lucide's Star is outline-only. */
-export function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 19" className={className} aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M10 0l2.47 6.18H19l-5.27 3.9L15.7 19 10 15.1 4.3 19l1.97-8.92L1 6.18h6.53z"
-      />
-    </svg>
-  );
-}

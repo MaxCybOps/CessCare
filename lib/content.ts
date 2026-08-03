@@ -29,8 +29,12 @@ export const hero = {
 
 export const socialProof = {
   label: "Built for people who believe prevention is the future",
-  /* The design shows four grey placeholder pills, not real logos. */
-  placeholderWidths: [128, 96, 160, 112],
+  /*
+    The design had four empty grey pills standing in for partner logos. No
+    partners exist yet, so rather than invent logos these carry the launch
+    markets from the go-to-market plan — true, and defensible pre-launch.
+  */
+  markets: ["Nigeria", "Ghana", "Kenya", "South Africa"],
 } as const;
 
 export const problem = {
@@ -176,26 +180,34 @@ export const lifestyle = {
   ],
 } as const;
 
-export const testimonials = {
-  heading: "Trusted by Proactive Patients",
+/*
+  Replaces the design's "Trusted by Proactive Patients" block. That section
+  carried three quotes attributed to named people who do not exist — the product
+  is pre-launch with no customers, so those were fabricated endorsements and
+  have been removed rather than reworded.
+
+  The layout is kept; the content now comes from the competitive strategy
+  report's market-gap analysis (Gaps #1, #2 and #3), which is defensible today.
+*/
+export const differentiators = {
+  heading: "Most apps track. We interpret.",
+  subheading:
+    "The first generation of wellness apps helped you collect data. The second helped you track habits. This is the layer that makes sense of both.",
   items: [
     {
-      quote:
-        "CessCare changed how I view my mornings. Instead of reactive coffee, I now have a data-backed routine that has doubled my afternoon productivity.",
-      name: "Sarah Jenkins",
-      role: "Performance Coach",
+      icon: "insights",
+      title: "Data with meaning",
+      body: "Most apps hand you charts and leave you to guess. CessCare tells you what changed, why it matters, and what to do next.",
     },
     {
-      quote:
-        "The meal analysis is incredible. It finally helped me identify which 'healthy' foods were actually causing my systemic inflammation. Precision at its best.",
-      name: "David Chen",
-      role: "Software Architect",
+      icon: "shield",
+      title: "One score, not seven apps",
+      body: "Sleep, nutrition, hydration, stress, activity and symptoms in a single view — because your health doesn't happen in separate apps.",
     },
     {
-      quote:
-        "Having a Cess Score gives me a peace of mind that no other app could. It feels like a quiet partner looking out for my long-term future health.",
-      name: "Elena Rodriguez",
-      role: "HR Executive",
+      icon: "lifestyle",
+      title: "Guidance that fits you",
+      body: "Not “drink more water.” Recommendations built from your own logged habits and the patterns running between them.",
     },
   ],
 } as const;
@@ -203,22 +215,32 @@ export const testimonials = {
 export const faq = {
   heading: "Common Questions",
   /*
-    Questions are from Figma. Answers are placeholders written to fill the
-    component — they are NOT design copy and should be replaced with real,
-    legally reviewed text before launch (especially the privacy one).
+    The three questions are from Figma; the fourth is added because the product
+    documents repeat the "not a doctor" disclaimer more than any other single
+    statement, which makes it the question most worth answering here.
+
+    Answers are grounded in the V1 PRD and strategy report. Two still need your
+    sign-off before launch:
+      - the privacy answer states a commitment ("never sold") the docs don't
+        define — confirm it matches your actual policy;
+      - the wearables answer says V1 is manual-only, per the roadmap.
   */
   items: [
     {
       q: "Is my health data private and secure?",
-      a: "Your data is encrypted in transit and at rest, and is never sold or shared with advertisers. You can export or permanently delete everything from your account at any time.",
+      a: "Your logs belong to you. CessCare is a wellness companion, not a healthcare provider, and your data is never sold to advertisers or third parties. You can export everything or permanently delete your account at any time.",
     },
     {
       q: "Which wearables are supported?",
-      a: "CessCare integrates with the major wearable platforms and reads from Apple Health and Google Health Connect, so most modern watches, rings, and trackers sync automatically.",
+      a: "Version one runs on manual logging — you record sleep, hydration, meals, mood, stress and symptoms yourself. That keeps CessCare useful whether or not you own a wearable. Automatic wearable integrations are the next major release on our roadmap.",
     },
     {
       q: "How often is my Cess Score updated?",
-      a: "Your score recalculates continuously as new data arrives, with a consolidated daily reading each morning once your overnight recovery metrics have synced.",
+      a: "Your score recalculates every time you log something, so it reflects the day as it actually unfolds rather than a fixed snapshot. Trends build as you keep logging.",
+    },
+    {
+      q: "Is CessCare a medical service?",
+      a: "No. CessCare is not a doctor, therapist, healthcare provider or diagnostic tool, and nothing it shows you is medical advice. It helps you understand your daily habits — for diagnosis or treatment, always speak to a qualified professional.",
     },
   ],
 } as const;
@@ -229,7 +251,7 @@ export const finalCta = {
     "Join 15,000+ others who are taking control of their longevity. Secure your spot on the early access waitlist.",
   placeholder: "Enter your email",
   button: "Join the Waitlist",
-  footnote: "No credit card required. Invite-only access launching Q4 2024.",
+  footnote: "No credit card required. Invite-only access launching Q4 2026.",
 } as const;
 
 export const footer = {
@@ -250,5 +272,5 @@ export const footer = {
     },
   ],
   copyright:
-    "© 2024 CessCare. Precision Health Intelligence. All rights reserved.",
+    "© 2026 CessCare. Precision Health Intelligence. All rights reserved.",
 } as const;

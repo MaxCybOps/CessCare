@@ -8,7 +8,7 @@ import { HowItWorks } from "@/components/sections/how-it-works";
 import { CessScore } from "@/components/sections/cess-score";
 import { AiCoach } from "@/components/sections/ai-coach";
 import { LifestyleGrid } from "@/components/sections/lifestyle-grid";
-import { Testimonials } from "@/components/sections/testimonials";
+import { Differentiators } from "@/components/sections/differentiators";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
 
@@ -26,7 +26,7 @@ export default function Home() {
         <CessScore />
         <AiCoach />
         <LifestyleGrid />
-        <Testimonials />
+        <Differentiators />
         <Faq />
         <FinalCta />
       </main>
