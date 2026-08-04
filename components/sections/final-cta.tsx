@@ -4,17 +4,39 @@ import { useState } from "react";
 import { finalCta } from "@/lib/content";
 import { Container } from "../ui";
 
+type Status = "idle" | "submitting" | "done" | "error";
+
 export function FinalCta() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "done">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    /*
-      No waitlist backend exists yet. The field validates and the form confirms
-      locally; wire the POST here when the endpoint is ready.
-    */
-    setStatus("done");
+    if (status === "submitting") return;
+
+    setStatus("submitting");
+    setError("");
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "landing-cta" }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setError(data?.error ?? "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("done");
+    } catch {
+      setError("Couldn't reach the server. Check your connection and retry.");
+      setStatus("error");
+    }
   }
 
   return (
@@ -34,26 +56,48 @@ export function FinalCta() {
           ) : (
             <form
               onSubmit={onSubmit}
-              className="flex w-full max-w-xl flex-col gap-4 sm:flex-row"
+              noValidate
+              className="flex w-full max-w-xl flex-col gap-3"
             >
-              <label htmlFor="waitlist-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="waitlist-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={finalCta.placeholder}
-                className="min-w-0 grow rounded-full border border-line bg-white px-6 py-4 text-base text-ink placeholder:text-body/60 focus:border-brand focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-full bg-brand px-8 py-4 text-base text-white shadow-[0_8px_24px_-8px_rgba(0,107,44,0.5)] transition-colors hover:bg-brand-bright"
-              >
-                {finalCta.button}
-              </button>
+              <div className="flex w-full flex-col gap-4 sm:flex-row">
+                <label htmlFor="waitlist-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="waitlist-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  disabled={status === "submitting"}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === "error") setStatus("idle");
+                  }}
+                  aria-invalid={status === "error"}
+                  aria-describedby={status === "error" ? "waitlist-error" : undefined}
+                  placeholder={finalCta.placeholder}
+                  className="min-w-0 grow rounded-full border border-line bg-white px-6 py-4 text-base text-ink placeholder:text-body/60 focus:border-brand focus:outline-none disabled:opacity-60"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="shrink-0 rounded-full bg-brand px-8 py-4 text-base text-white shadow-[0_8px_24px_-8px_rgba(0,107,44,0.5)] transition-colors hover:bg-brand-bright disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {status === "submitting" ? "Joining…" : finalCta.button}
+                </button>
+              </div>
+
+              {status === "error" && (
+                <p
+                  id="waitlist-error"
+                  role="alert"
+                  className="text-sm text-icon-rose"
+                >
+                  {error}
+                </p>
+              )}
             </form>
           )}
 
