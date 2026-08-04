@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Prisma 7 moved the connection URL out of the schema — it now lives in
+// prisma.config.ts for CLI commands, and reaches the client via a driver adapter.
+datasource db {
+  provider = "postgresql"
+}
+
+/// Early-access waitlist signups from the landing page CTA.
+model WaitlistSignup {
+  id    String @id @default(cuid())
+  /// Stored lowercased and trimmed so the unique constraint actually dedupes.
+  email String @unique
+
+  /// Which form sent it — lets us tell the hero CTA from the footer CTA later.
+  source String @default("landing-cta")
+
+  /// Kept for abuse triage only. Clear these out if they aren't earning their
+  /// keep, since they are personal data under most privacy regimes.
+  userAgent String?
+  ipHash    String?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
