@@ -49,6 +49,20 @@ export default function RootLayout({
       lang="en"
       className={`${hanken.variable} ${inter.variable} ${jetbrains.variable} h-full`}
     >
+      <head>
+        {/*
+          Marks the document as JS-capable before first paint. Scroll-reveal
+          styles are scoped to `.js`, so if this never runs — JS disabled, a
+          script error, an old browser — every section stays visible instead of
+          the page rendering blank below the fold. Inline and synchronous on
+          purpose: a deferred script would cause a flash of visible content.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js')`,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

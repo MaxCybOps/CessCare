@@ -55,6 +55,12 @@
     color: var(--color-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    /*
+      Safety net. The real cause of horizontal scroll was the header row not
+      being allowed to shrink; that's fixed at source. `clip` rather than
+      `hidden` because `hidden` would break the sticky header.
+    */
+    overflow-x: clip;
   }
 
   h1,
@@ -88,20 +94,24 @@
     padding-inline: 1.5rem;
   }
 
-  /* Display: 64/72 w700 ls-1.28 on desktop. */
+  /*
+    Display: 64/72 w700 ls-1.28 at 1280. The mobile floor was 40px, which was
+    far too heavy on a 390px screen — it's the "everything looks bolder on
+    mobile" complaint. Floor is now 32px.
+  */
   .text-display {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4rem);
-    line-height: 1.125;
+    font-size: clamp(2rem, 1.35rem + 2.75vw, 4rem);
+    line-height: 1.1;
     letter-spacing: -0.02em;
   }
 
-  /* Section heading: 40/48 w600 ls-0.40 on desktop. */
+  /* Section heading: 40/48 w600 ls-0.40 at 1280, floor lowered to 24px. */
   .text-h2 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+    font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.5rem);
     line-height: 1.2;
     letter-spacing: -0.01em;
   }
@@ -120,11 +130,90 @@
   .section-y {
     padding-block: clamp(3.5rem, 2rem + 6vw, 5rem);
   }
+
+  /* ── Motion ──────────────────────────────────────────────────────────────
+     Scroll reveal. Elements start offset and settle as they enter the
+     viewport; the Reveal component flips data-visible via IntersectionObserver.
+     An easing curve with a slight overshoot reads as intentional rather than
+     as a generic fade. All of it is disabled under prefers-reduced-motion.
+  */
+  /*
+    Content is visible by default and only *hidden* once the `js` class lands on
+    <html> (set by an inline script in layout.tsx before first paint). Without
+    that guard, any failure of JS or IntersectionObserver would leave the whole
+    page blank below the fold — the animation would become a content outage.
+  */
+  .reveal {
+    transition:
+      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    will-change: opacity, transform;
+  }
+
+  .js .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* Cards rise slightly and cast a deeper shadow on hover. */
+  .card-lift {
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease;
+  }
+
+  .card-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -24px rgba(19, 27, 46, 0.28);
+    border-color: color-mix(in srgb, var(--color-brand) 35%, transparent);
+  }
+
+  /* Slow drift on the hero's background wash so it isn't dead still. */
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(0, -1.5%, 0) scale(1.06);
+    }
+  }
+
+  .animate-drift {
+    animation: drift 18s ease-in-out infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /*
+    Reveal elements start at opacity 0 and are shown by an IntersectionObserver.
+    Force them visible here so reduced-motion users never depend on that — and
+    so content is never stuck invisible if the observer doesn't run.
+  */
+  .js .reveal,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .animate-drift {
+    animation: none !important;
+  }
+
+  .card-lift:hover {
+    transform: none !important;
   }
 
   *,
