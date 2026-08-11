@@ -79,7 +79,12 @@ export const solution = {
     {
       icon: "tracking",
       title: "Daily Tracking",
-      body: "Seamless integration with your favorite wearables.",
+      /*
+        Was "Seamless integration with your favorite wearables" — but the V1
+        PRD puts wearable integrations in V2 and lists manual entry as the MVP
+        approach. Rewritten so the page doesn't promise what V1 can't do.
+      */
+      body: "Log sleep, hydration, mood and symptoms in seconds — no wearable required.",
     },
     {
       icon: "meal",
@@ -102,7 +107,8 @@ export const solution = {
 export const howItWorks = {
   heading: "Five Steps to Longevity",
   steps: [
-    { n: 1, title: "Track", body: "Wearables sync data." },
+    /* Step 1 was "Wearables sync data" — V1 is manual logging. See solution.tracking. */
+    { n: 1, title: "Log", body: "A few taps a day." },
     { n: 2, title: "Analyze", body: "AI finds correlations." },
     { n: 3, title: "Score", body: "Get your Cess Score." },
     { n: 4, title: "Recommend", body: "Actionable nudges." },
