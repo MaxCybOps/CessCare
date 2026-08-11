@@ -1,43 +1,45 @@
 import Image from "next/image";
 import { solution } from "@/lib/content";
 import { Icon } from "../icons";
-import { Container, SectionHeading } from "../ui";
+import { Container } from "../ui";
+import { Reveal } from "../reveal";
 
 export function Solution() {
   return (
     <section id="features" className="section-y bg-white">
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Image sits left on desktop, but reads second on mobile so the
-              heading leads. order-* handles the swap without duplicating markup. */}
-          <div className="order-2 overflow-hidden rounded-[2rem] shadow-[0_24px_64px_-32px_rgba(19,27,46,0.4)] lg:order-1 lg:rounded-[3rem]">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+          {/* Image left on desktop, but second on mobile so the heading leads. */}
+          <Reveal className="order-2 overflow-hidden rounded-[1.5rem] shadow-[0_24px_64px_-32px_rgba(19,27,46,0.4)] sm:rounded-[2rem] lg:order-1 lg:rounded-[3rem]">
             <Image
               src="/images/solution-tablet.png"
               alt="A tablet on a desk showing the CessCare dashboard with sleep, activity and hydration summaries."
-              width={1184}
-              height={646}
-              sizes="(max-width: 1024px) 100vw, 592px"
+              width={2368}
+              height={1291}
+              sizes="(max-width: 1024px) 92vw, 592px"
               className="h-auto w-full"
             />
-          </div>
+          </Reveal>
 
-          <div className="order-1 flex flex-col gap-8 lg:order-2">
-            <SectionHeading>{solution.heading}</SectionHeading>
+          <div className="order-1 flex flex-col gap-6 sm:gap-8 lg:order-2">
+            <Reveal as="h2" className="text-h2">
+              {solution.heading}
+            </Reveal>
 
-            <div className="grid gap-8 sm:grid-cols-2">
-              {solution.features.map((f) => (
-                <div key={f.title} className="flex gap-4">
+            <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
+              {solution.features.map((f, i) => (
+                <Reveal key={f.title} delay={i * 70} className="flex gap-4">
                   <Icon
                     name={f.icon}
                     className="mt-0.5 size-5 shrink-0 text-brand"
                   />
-                  <div className="flex flex-col gap-2">
+                  <div className="flex min-w-0 flex-col gap-2">
                     <h4 className="text-lg font-bold text-ink">{f.title}</h4>
                     <p className="text-sm leading-relaxed text-body">
                       {f.body}
                     </p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>

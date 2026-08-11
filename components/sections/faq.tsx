@@ -1,36 +1,42 @@
 import { ChevronDown } from "lucide-react";
 import { faq } from "@/lib/content";
 import { Container, SectionHeading } from "../ui";
+import { Reveal } from "../reveal";
 
 /*
-  Native <details>/<summary> — the accordion needs no JS, works without
-  hydration, and is keyboard accessible for free. The 768px column width is
-  taken straight from the design.
+  Native <details>/<summary> — no JS, works without hydration, keyboard
+  accessible for free. The 768px column width comes from the design.
 */
 export function Faq() {
   return (
     <section id="faq" className="section-y">
       <Container>
         <div className="mx-auto max-w-3xl">
-          <SectionHeading className="text-center">{faq.heading}</SectionHeading>
+          <Reveal>
+            <SectionHeading className="text-center">
+              {faq.heading}
+            </SectionHeading>
+          </Reveal>
 
-          <div className="mt-12 flex flex-col gap-4">
-            {faq.items.map((item) => (
-              <details
+          <div className="mt-10 flex flex-col gap-4 sm:mt-12">
+            {faq.items.map((item, i) => (
+              <Reveal
                 key={item.q}
-                className="group rounded-[2rem] border border-line/60 bg-white px-6 py-5 open:shadow-[0_16px_40px_-28px_rgba(19,27,46,0.35)]"
+                as="details"
+                delay={i * 70}
+                className="group rounded-[1.5rem] border border-line/60 bg-white px-5 py-4 transition-colors hover:border-brand/40 open:shadow-[0_16px_40px_-28px_rgba(19,27,46,0.35)] sm:rounded-[2rem] sm:px-6 sm:py-5"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg text-ink marker:hidden [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base text-ink marker:hidden sm:gap-6 sm:text-lg [&::-webkit-details-marker]:hidden">
                   {item.q}
                   <ChevronDown
                     aria-hidden="true"
-                    className="size-5 shrink-0 text-body transition-transform duration-200 group-open:rotate-180"
+                    className="size-5 shrink-0 text-body transition-transform duration-300 group-open:rotate-180"
                   />
                 </summary>
                 <p className="mt-4 text-base leading-relaxed text-body">
                   {item.a}
                 </p>
-              </details>
+              </Reveal>
             ))}
           </div>
         </div>
