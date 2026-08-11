@@ -7,14 +7,19 @@ import { nav } from "@/lib/content";
 import { ButtonLink, Container, Logo } from "./ui";
 
 /*
-  Figma gives an 80px static bar. Made sticky here — at 6752px tall the page
-  needs persistent access to the CTA. Below lg the links collapse into a sheet,
-  since five links plus a 214px button cannot fit a 390px viewport.
+  The CTA is a wide, non-wrapping pill. Showing it from `sm` meant that between
+  roughly 400px and 1024px the row (logo + CTA + hamburger) could not fit, so
+  the header overflowed and dragged the whole page into horizontal scroll —
+  which made every section below look shoved around and oversized.
+
+  Fix: the CTA only appears at `lg`, where the nav links appear too and there is
+  room for both. Below that it lives in the mobile sheet. min-w-0 on the flex
+  children lets them shrink instead of forcing the row wider than the viewport.
 */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Lock scroll behind the mobile sheet.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -22,7 +27,6 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  // Escape closes the sheet.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -30,34 +34,54 @@ export function SiteHeader() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  return (
-    <header className="sticky top-0 z-50 border-b border-line/40 bg-white/85 backdrop-blur-md">
-      <Container>
-        <div className="flex h-20 items-center justify-between gap-6">
-          <Logo />
+  // Deepen the header shadow once the page moves, so it reads as a layer.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-          <nav
-            aria-label="Primary"
-            className="hidden items-center gap-8 lg:flex"
-          >
+  return (
+    <header
+      className={`sticky top-0 z-50 bg-white/85 backdrop-blur-md transition-shadow duration-300 ${
+        scrolled
+          ? "shadow-[0_1px_0_rgba(189,202,186,0.5),0_8px_24px_-16px_rgba(19,27,46,0.35)]"
+          : "shadow-[0_1px_0_rgba(189,202,186,0.35)]"
+      }`}
+    >
+      <Container>
+        <div className="flex h-16 items-center justify-between gap-4 sm:h-20">
+          <Logo className="min-w-0 shrink" />
+
+          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
             {nav.links.map((l) => (
               <Link
                 key={l.label}
                 href={l.href}
-                className="text-base text-body transition-colors hover:text-brand"
+                className="relative text-base text-body transition-colors hover:text-brand after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-brand after:transition-all after:duration-300 hover:after:w-full"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <ButtonLink
-              href="#waitlist"
-              className="hidden font-mono text-sm tracking-widest uppercase sm:inline-flex"
-            >
-              {nav.cta}
-            </ButtonLink>
+          <div className="flex shrink-0 items-center gap-3">
+            {/*
+              Wrapped rather than putting `hidden` on the ButtonLink itself:
+              ButtonLink already sets `inline-flex`, and Tailwind emits
+              `.inline-flex` after `.hidden`, so the hide silently lost and the
+              CTA stayed on screen at every width. Two display utilities on one
+              element is the trap — the wrapper avoids it entirely.
+            */}
+            <div className="hidden lg:block">
+              <ButtonLink
+                href="#waitlist"
+                className="font-mono text-sm tracking-widest uppercase"
+              >
+                {nav.cta}
+              </ButtonLink>
+            </div>
 
             <button
               type="button"
@@ -65,7 +89,7 @@ export function SiteHeader() {
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="grid size-11 place-items-center rounded-full border border-line text-ink lg:hidden"
+              className="grid size-11 shrink-0 place-items-center rounded-full border border-line text-ink transition-colors hover:border-brand hover:text-brand lg:hidden"
             >
               {open ? <X size={20} /> : <Menu size={20} />}
             </button>

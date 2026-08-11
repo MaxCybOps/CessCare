@@ -67,7 +67,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      className={`flex items-center gap-3 ${className}`}
+      className={`flex items-center gap-2 sm:gap-3 ${className}`}
       aria-label="CessCare home"
     >
       <Image
@@ -75,11 +75,12 @@ export function Logo({
         alt=""
         width={size}
         height={size}
-        className="rounded-lg"
+        className="size-8 shrink-0 rounded-lg sm:size-10"
         priority
       />
+      {/* truncate rather than push the row wider than the viewport */}
       <span
-        className="font-display text-2xl font-bold text-ink"
+        className="truncate font-display text-xl font-bold text-ink sm:text-2xl"
         style={{ letterSpacing: "-0.01em" }}
       >
         Cess<span className="text-brand">Care</span>
