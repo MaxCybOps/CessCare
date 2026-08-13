@@ -84,7 +84,7 @@ export const solution = {
         PRD puts wearable integrations in V2 and lists manual entry as the MVP
         approach. Rewritten so the page doesn't promise what V1 can't do.
       */
-      body: "Log sleep, hydration, mood and symptoms in seconds — no wearable required.",
+      body: "Log sleep, hydration, mood and symptoms in seconds. No wearable required.",
     },
     {
       icon: "meal",
@@ -134,7 +134,7 @@ export const cessScore = {
 export const aiCoach = {
   heading: "Your Personal Health Oracle",
   subheading:
-    "Not just data—conversational guidance that understands your context, your schedule, and your goals.",
+    "Not just data. Conversational guidance that understands your context, your schedule, and your goals.",
   userMessage: "Hey Cess, I'm feeling a bit sluggish this morning. What's up?",
   coachMessage:
     "Morning! Your HRV was slightly lower last night, and you're 20% behind on hydration. Let's start with 500ml of water and a light 10min stretch before your first meeting.",
@@ -208,7 +208,7 @@ export const differentiators = {
     {
       icon: "shield",
       title: "One score, not seven apps",
-      body: "Sleep, nutrition, hydration, stress, activity and symptoms in a single view — because your health doesn't happen in separate apps.",
+      body: "Sleep, nutrition, hydration, stress, activity and symptoms in a single view, because your health doesn't happen in separate apps.",
     },
     {
       icon: "lifestyle",
@@ -238,7 +238,7 @@ export const faq = {
     },
     {
       q: "Which wearables are supported?",
-      a: "Version one runs on manual logging — you record sleep, hydration, meals, mood, stress and symptoms yourself. That keeps CessCare useful whether or not you own a wearable. Automatic wearable integrations are the next major release on our roadmap.",
+      a: "Version one runs on manual logging. You record sleep, hydration, meals, mood, stress and symptoms yourself, which keeps CessCare useful whether or not you own a wearable. Automatic wearable integrations are the next major release on our roadmap.",
     },
     {
       q: "How often is my Cess Score updated?",
@@ -246,7 +246,7 @@ export const faq = {
     },
     {
       q: "Is CessCare a medical service?",
-      a: "No. CessCare is not a doctor, therapist, healthcare provider or diagnostic tool, and nothing it shows you is medical advice. It helps you understand your daily habits — for diagnosis or treatment, always speak to a qualified professional.",
+      a: "No. CessCare is not a doctor, therapist, healthcare provider or diagnostic tool, and nothing it shows you is medical advice. It helps you understand your daily habits. For diagnosis or treatment, always speak to a qualified professional.",
     },
   ],
 } as const;

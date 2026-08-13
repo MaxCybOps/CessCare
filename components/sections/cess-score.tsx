@@ -75,7 +75,7 @@ export function CessScore() {
               viewBox="0 0 320 320"
               className="absolute inset-0 size-full -rotate-90"
               role="img"
-              aria-label={`Cess Score ${cessScore.score} out of 100 — ${cessScore.status}`}
+              aria-label={`Cess Score ${cessScore.score} out of 100, ${cessScore.status}`}
             >
               <circle
                 cx="160"

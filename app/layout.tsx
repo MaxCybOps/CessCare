@@ -28,11 +28,11 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CessCare — Know Your Health Before It Becomes a Problem",
+  title: "CessCare | Know Your Health Before It Becomes a Problem",
   description:
     "CessCare combines precision AI data with human-centric habits to help you navigate your well-being with clarity and intelligence.",
   openGraph: {
-    title: "CessCare — Precision Health Intelligence",
+    title: "CessCare | Precision Health Intelligence",
     description:
       "A single, unified metric derived from thousands of data points across five critical health pillars.",
     type: "website",

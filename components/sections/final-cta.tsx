@@ -51,7 +51,7 @@ export function FinalCta() {
               role="status"
               className="rounded-full bg-brand/10 px-6 py-4 text-base text-brand"
             >
-              You&rsquo;re on the list — we&rsquo;ll be in touch at {email}.
+              You&rsquo;re on the list. We&rsquo;ll be in touch at {email}.
             </p>
           ) : (
             <form
