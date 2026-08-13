@@ -19,7 +19,13 @@ export function Hero() {
 
       <Container>
         <div className="grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-2 lg:gap-12 lg:py-[7.5rem]">
-          <div className="flex flex-col items-start gap-5 sm:gap-6">
+          {/*
+            Centred below lg, left-aligned from lg up. Every other section on
+            this page centres its heading on mobile, so a left-aligned hero read
+            as crooked next to them. The design's left alignment only makes
+            sense once the two-column split exists.
+          */}
+          <div className="flex flex-col items-center gap-5 text-center sm:gap-6 lg:items-start lg:text-left">
             <Reveal as="span" className="inline-block">
               <span className="text-eyebrow inline-block rounded-full bg-mint/45 px-4 py-1.5 text-brand-deep">
                 {hero.eyebrow}

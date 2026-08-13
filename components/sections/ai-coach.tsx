@@ -13,10 +13,10 @@ export function AiCoach() {
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col gap-5 sm:gap-6">
-            <Reveal as="h2" className="text-h2 text-white">
+            <Reveal as="h2" className="text-h2 text-center text-white lg:text-left">
               {aiCoach.heading}
             </Reveal>
-            <Reveal as="p" delay={80} className="max-w-[37rem] text-base leading-relaxed text-surface-mint">
+            <Reveal as="p" delay={80} className="mx-auto max-w-[37rem] text-center text-base leading-relaxed text-surface-mint lg:mx-0 lg:text-left">
               {aiCoach.subheading}
             </Reveal>
 

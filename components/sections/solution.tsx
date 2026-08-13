@@ -22,7 +22,9 @@ export function Solution() {
           </Reveal>
 
           <div className="order-1 flex flex-col gap-6 sm:gap-8 lg:order-2">
-            <Reveal as="h2" className="text-h2">
+            {/* Heading centres on mobile to match the sections around it;
+                the feature rows stay left because they lead with an icon. */}
+            <Reveal as="h2" className="text-h2 text-center lg:text-left">
               {solution.heading}
             </Reveal>
 
